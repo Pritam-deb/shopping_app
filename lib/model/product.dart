@@ -1,13 +1,19 @@
 import 'dart:core';
 
 class Product {
-  String name;
-  String price;
-  String image;
+  late String name;
+  late String price;
+  late String imageUrl;
 
   Product({
     required this.name,
     required this.price,
-    required this.image,
+    required this.imageUrl,
   });
+
+  Product.fromJson(Map<String, dynamic> parsedJson) {
+    name = parsedJson['name'] ?? "";
+    price = parsedJson['price'] ?? "";
+    imageUrl = parsedJson['imageUrl'] ?? "";
+  }
 }
