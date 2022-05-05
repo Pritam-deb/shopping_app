@@ -14,10 +14,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Icon(Icons.horizontal_split), Icon(Icons.search)],
+          children: const [
+            Icon(Icons.horizontal_split),
+            Icon(Icons.search),
+          ],
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Text('This is body'),
       ),
     );

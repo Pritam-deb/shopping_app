@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Shopping App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.amber),
+      theme: ThemeData(primarySwatch: Colors.blueGrey),
       home: HomeScreen(),
     );
   }
