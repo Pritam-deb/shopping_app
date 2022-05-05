@@ -6,7 +6,6 @@ class ProductProvider extends ChangeNotifier {
 
   void addProducts(List<dynamic> data) {
     for (var i = 0; i < data.length; i++) {
-      print("runned");
       productList.add(Product.fromJson(data[i]));
     }
     notifyListeners();
