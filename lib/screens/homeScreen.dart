@@ -19,6 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   bool _pressAttention = false;
+  Icon customIcon = Icon(Icons.search);
+  Widget customSearchBar = Text('hhi');
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -38,9 +40,35 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Icon(
-                    Icons.search,
+                  customSearchBar,
+                  IconButton(
+                    icon: customIcon,
                     color: Colors.black,
+                    onPressed: () {
+                      setState(() {
+                        if (customIcon.icon == Icons.search) {
+                          customIcon = const Icon(Icons.cancel);
+                          customSearchBar = const SizedBox(
+                            width: 150,
+                            height: 20,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'search movies',
+                                hintStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          );
+                        } else {
+                          customIcon = const Icon(Icons.search);
+                          customSearchBar = Text('hijijij');
+                        }
+                      });
+                    },
                   ),
                   const Icon(
                     Icons.shopping_bag_outlined,
