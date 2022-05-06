@@ -13,26 +13,6 @@ class HorizontalScrollableList extends StatefulWidget {
 
 class _HorizontalScrollableListState extends State<HorizontalScrollableList> {
   @override
-  Widget? showLists(_provider) {
-    for (var i = 0; i >= 4; i++) {
-      Padding(
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-        child: Container(
-          width: 160.0,
-          child: Card(
-            child: Image.network(
-              _provider.productList[i].imageUrl,
-              fit: BoxFit.cover,
-            ),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          ),
-        ),
-      );
-    }
-    ;
-  }
-
   Widget build(BuildContext context) {
     return Column(
       children: [
