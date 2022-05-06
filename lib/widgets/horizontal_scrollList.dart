@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../model/productProvider.dart';
 
 class HorizontalScrollableList extends StatefulWidget {
   const HorizontalScrollableList({Key? key}) : super(key: key);
@@ -10,6 +13,26 @@ class HorizontalScrollableList extends StatefulWidget {
 
 class _HorizontalScrollableListState extends State<HorizontalScrollableList> {
   @override
+  Widget? showLists(_provider) {
+    for (var i = 0; i >= 4; i++) {
+      Padding(
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+        child: Container(
+          width: 160.0,
+          child: Card(
+            child: Image.network(
+              _provider.productList[i].imageUrl,
+              fit: BoxFit.cover,
+            ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          ),
+        ),
+      );
+    }
+    ;
+  }
+
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -24,70 +47,34 @@ class _HorizontalScrollableListState extends State<HorizontalScrollableList> {
             ],
           ),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 20.0),
-          height: 200.0,
-          child: ListView(
-            // This next line does the trick.
-            scrollDirection: Axis.horizontal,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: Container(
-                  width: 160.0,
-                  child: Card(
-                    child: Text('image'),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: Container(
-                  width: 160.0,
-                  child: Card(
-                    child: Text('image'),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: Container(
-                  width: 160.0,
-                  child: Card(
-                    child: Text('image'),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: Container(
-                  width: 160.0,
-                  child: Card(
-                    child: Text('image'),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: Container(
-                  width: 160.0,
-                  child: Card(
-                    child: Text('image'),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                  ),
-                ),
-              ),
-            ],
-          ),
+        Consumer<ProductProvider>(
+          builder: (context, _provider, child) =>
+              _provider.productList.isNotEmpty
+                  ? Container(
+                      margin: const EdgeInsets.symmetric(vertical: 20.0),
+                      height: 200.0,
+                      child: ListView.builder(
+                          // This next line does the trick.
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _provider.productList.length,
+                          itemBuilder: (BuildContext, index) {
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              child: Container(
+                                width: 160.0,
+                                child: Card(
+                                  child: Image.network(
+                                    _provider.productList[index].imageUrl,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                ),
+                              ),
+                            );
+                          }),
+                    )
+                  : const Text('Nothing yet :('),
         ),
       ],
     );
