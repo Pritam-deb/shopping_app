@@ -18,31 +18,157 @@ class _HomeScreenState extends State<HomeScreen> {
     NetworkRequests().fetchProducts(context);
   }
 
+  String selectedTab = 'All';
+  Icon customIcon = Icon(Icons.search);
+  Widget customSearchBar = Text('');
+  void changeTab(String newValue) {
+    setState(() {
+      selectedTab = newValue;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Icon(Icons.horizontal_split),
-            Icon(Icons.search),
-          ],
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Icon(
+                Icons.horizontal_split,
+                color: Colors.black,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  customSearchBar,
+                  IconButton(
+                    icon: customIcon,
+                    color: Colors.black,
+                    onPressed: () {
+                      setState(() {
+                        if (customIcon.icon == Icons.search) {
+                          customIcon = const Icon(Icons.cancel);
+                          customSearchBar = const SizedBox(
+                            width: 150,
+                            height: 20,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'search movies',
+                                hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          );
+                        } else {
+                          customIcon = const Icon(Icons.search);
+                          customSearchBar = const Text('');
+                        }
+                      });
+                    },
+                  ),
+                  const Icon(
+                    Icons.shopping_bag_outlined,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-      body: Consumer<ProductProvider>(
-        builder: ((context, _provider, child) {
-          return _provider.productList.isNotEmpty
-              ? Text(_provider.productList[0].genre,
-                  style: TextStyle(
-                    fontSize: 20.toFont,
-                  ))
-              : const Text(
-                  "nothing yet :(",
-                );
-        }),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.fromLTRB(18, 0, 0, 20),
+            child: Text(
+              'Find your Style',
+              //textAlign: TextAlign.end,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ButtonOutlined(
+                  name: 'All',
+                  selectedTab: selectedTab,
+                  changeTab: changeTab,
+                ),
+                ButtonOutlined(
+                  name: 'Winter',
+                  changeTab: changeTab,
+                  selectedTab: selectedTab,
+                ),
+                ButtonOutlined(
+                  name: 'Eyewear',
+                  changeTab: changeTab,
+                  selectedTab: selectedTab,
+                ),
+                ButtonOutlined(
+                  name: 'Women',
+                  changeTab: changeTab,
+                  selectedTab: selectedTab,
+                ),
+              ],
+            ),
+          ),
+          Consumer<ProductProvider>(
+            builder: ((context, _provider, child) {
+              return _provider.productList.isNotEmpty
+                  ? Text(_provider.productList[0].genre,
+                      style: TextStyle(
+                        fontSize: 20.toFont,
+                      ))
+                  : const Text(
+                      "nothing yet :(",
+                    );
+            }),
+          ),
+        ],
       ),
+    );
+  }
+}
+
+class ButtonOutlined extends StatelessWidget {
+  const ButtonOutlined({
+    Key? key,
+    required this.name,
+    required this.selectedTab,
+    required this.changeTab,
+  }) : super(key: key);
+
+  final String name;
+  final String selectedTab;
+  final Function changeTab;
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        primary: selectedTab == name ? Colors.white : Colors.black,
+        backgroundColor: selectedTab == name ? Colors.black : Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      onPressed: () {
+        changeTab(name);
+      },
+      child: Text(name),
     );
   }
 }

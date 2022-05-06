@@ -20,8 +20,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Shopping App',
+        theme: ThemeData(scaffoldBackgroundColor: Colors.white),
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.blueGrey),
         home: HomeScreen(),
       ),
     );
