@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app/components/Carousel.dart';
 import 'package:shopping_app/model/productProvider.dart';
 import 'package:shopping_app/services/network_requests.dart';
 import 'package:shopping_app/services/size_config.dart';
@@ -131,12 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
           Consumer<ProductProvider>(
             builder: ((context, _provider, child) {
               return _provider.productList.isNotEmpty
-                  ? Text(_provider.productList[0].genre,
-                      style: TextStyle(
-                        fontSize: 20.toFont,
-                      ))
+                  ? Carousel(
+                      productList: _provider.productList,
+                    )
                   : const Text(
-                      "nothing yet :(",
+                      "Loading Carousel",
                     );
             }),
           ),
