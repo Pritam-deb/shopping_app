@@ -18,9 +18,15 @@ class _HomeScreenState extends State<HomeScreen> {
     NetworkRequests().fetchProducts(context);
   }
 
-  bool _pressAttention = false;
+  String selectedTab = 'All';
   Icon customIcon = Icon(Icons.search);
-  Widget customSearchBar = Text('hhi');
+  Widget customSearchBar = Text('');
+  void changeTab(String newValue) {
+    setState(() {
+      selectedTab = newValue;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -55,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               decoration: InputDecoration(
                                 hintText: 'search movies',
                                 hintStyle: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.grey,
                                   fontSize: 15,
                                   fontStyle: FontStyle.italic,
                                 ),
@@ -65,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         } else {
                           customIcon = const Icon(Icons.search);
-                          customSearchBar = Text('hijijij');
+                          customSearchBar = const Text('');
                         }
                       });
                     },
@@ -99,53 +105,25 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    primary: _pressAttention ? Colors.white : Colors.black,
-                    backgroundColor:
-                        _pressAttention ? Colors.black : Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                  onPressed: () =>
-                      setState(() => _pressAttention = !_pressAttention),
-                  child: const Text('All'),
+                ButtonOutlined(
+                  name: 'All',
+                  selectedTab: selectedTab,
+                  changeTab: changeTab,
                 ),
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    primary: _pressAttention ? Colors.white : Colors.black,
-                    backgroundColor:
-                        _pressAttention ? Colors.black : Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                  onPressed: () =>
-                      setState(() => _pressAttention = !_pressAttention),
-                  child: const Text('Winter'),
+                ButtonOutlined(
+                  name: 'Winter',
+                  changeTab: changeTab,
+                  selectedTab: selectedTab,
                 ),
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    primary: _pressAttention ? Colors.white : Colors.black,
-                    backgroundColor:
-                        _pressAttention ? Colors.black : Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                  onPressed: () =>
-                      setState(() => _pressAttention = !_pressAttention),
-                  child: const Text('Women'),
+                ButtonOutlined(
+                  name: 'Eyewear',
+                  changeTab: changeTab,
+                  selectedTab: selectedTab,
                 ),
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    primary: _pressAttention ? Colors.white : Colors.black,
-                    backgroundColor:
-                        _pressAttention ? Colors.black : Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                  onPressed: () =>
-                      setState(() => _pressAttention = !_pressAttention),
-                  child: const Text('Eyewear'),
+                ButtonOutlined(
+                  name: 'Women',
+                  changeTab: changeTab,
+                  selectedTab: selectedTab,
                 ),
               ],
             ),
@@ -164,6 +142,33 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ButtonOutlined extends StatelessWidget {
+  const ButtonOutlined({
+    Key? key,
+    required this.name,
+    required this.selectedTab,
+    required this.changeTab,
+  }) : super(key: key);
+
+  final String name;
+  final String selectedTab;
+  final Function changeTab;
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        primary: selectedTab == name ? Colors.white : Colors.black,
+        backgroundColor: selectedTab == name ? Colors.black : Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      onPressed: () {
+        changeTab(name);
+      },
+      child: Text(name),
     );
   }
 }
