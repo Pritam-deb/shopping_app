@@ -4,6 +4,8 @@ import 'package:shopping_app/model/productProvider.dart';
 import 'package:shopping_app/services/network_requests.dart';
 import 'package:shopping_app/services/size_config.dart';
 
+import '../widgets/horizontal_scrollList.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -140,6 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
             }),
           ),
+          HorizontalScrollableList(),
         ],
       ),
     );
