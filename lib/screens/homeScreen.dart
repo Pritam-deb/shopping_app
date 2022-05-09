@@ -6,6 +6,7 @@ import 'package:shopping_app/services/network_requests.dart';
 import 'package:shopping_app/services/size_config.dart';
 
 import '../widgets/horizontal_scrollList.dart';
+import 'cartScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -79,9 +80,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                   ),
-                  const Icon(
-                    Icons.shopping_bag_outlined,
-                    color: Colors.black,
+                  OutlinedButton.icon(
+                    icon: const Icon(
+                      Icons.shopping_bag_outlined,
+                      color: Colors.black,
+                    ),
+                    style: OutlinedButton.styleFrom(side: BorderSide.none),
+                    label: Text(''),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CartScreen(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
