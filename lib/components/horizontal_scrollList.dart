@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_app/components/Carousel.dart';
+import 'package:shopping_app/components/carousel.dart';
 import 'package:shopping_app/utils/strings.dart';
 
 import '../model/productProvider.dart';
