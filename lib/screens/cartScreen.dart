@@ -139,7 +139,7 @@ class CartScreen extends StatelessWidget {
                           Text('Price: '),
                           Row(
                             children: [
-                              CounterList(),
+                              // CounterList(),
                               Icon(Icons.cancel),
                             ],
                           )
