@@ -18,7 +18,7 @@ class Carousel extends StatefulWidget {
 
 class _CarouselState extends State<Carousel> {
   late PageController _pageController;
-  int currentPage = 0;
+  int currentPage = 1;
 
   @override
   void initState() {
@@ -60,14 +60,24 @@ class _CarouselState extends State<Carousel> {
           angle: rotateValue,
           child: Transform.scale(
             scale: 1 - scaleValue,
-            child: carouselCard(widget.productList[index]),
+            child: CarouselCard(product: widget.productList[index]),
           ),
         );
       },
     );
   }
+}
 
-  Widget carouselCard(Product product) {
+class CarouselCard extends StatelessWidget {
+  const CarouselCard({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Expanded(

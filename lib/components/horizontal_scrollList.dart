@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app/components/Carousel.dart';
+import 'package:shopping_app/utils/strings.dart';
 
 import '../model/productProvider.dart';
 
 class HorizontalScrollableList extends StatefulWidget {
-  const HorizontalScrollableList({Key? key}) : super(key: key);
+  const HorizontalScrollableList({Key? key, required this.screenWidth})
+      : super(key: key);
+
+  final screenWidth;
 
   @override
   State<HorizontalScrollableList> createState() =>
@@ -21,9 +26,12 @@ class _HorizontalScrollableListState extends State<HorizontalScrollableList> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Most Popular',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              Text('See all'),
+              Text(
+                Strings().hrListOne,
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Text(Strings().seeAll),
             ],
           ),
         ),
@@ -32,29 +40,22 @@ class _HorizontalScrollableListState extends State<HorizontalScrollableList> {
               _provider.productList.isNotEmpty
                   ? Container(
                       margin: const EdgeInsets.symmetric(vertical: 20.0),
-                      height: 200.0,
+                      height: 300,
                       child: ListView.builder(
-                          // This next line does the trick.
                           scrollDirection: Axis.horizontal,
                           itemCount: _provider.productList.length,
-                          itemBuilder: (BuildContext, index) {
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                              child: Container(
-                                width: 160.0,
-                                child: Card(
-                                  child: Image.network(
-                                    _provider.productList[index].imageUrl,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8)),
-                                ),
-                              ),
-                            );
+                          itemBuilder: (BuildContext context, index) {
+                            return _provider.productList[index].type == "Movie"
+                                ? SizedBox(
+                                    width: widget.screenWidth / 2,
+                                    child: CarouselCard(
+                                      product: _provider.productList[index],
+                                    ),
+                                  )
+                                : Container();
                           }),
                     )
-                  : const Text('Nothing yet :('),
+                  : const Text('Loading list...'),
         ),
       ],
     );
