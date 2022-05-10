@@ -50,6 +50,7 @@ class _HorizontalScrollableListState extends State<HorizontalScrollableList> {
                                     width: widget.screenWidth / 2,
                                     child: CarouselCard(
                                       product: _provider.productList[index],
+                                      listName: "Movie",
                                     ),
                                   )
                                 : Container();
