@@ -6,6 +6,7 @@ import 'package:shopping_app/services/network_requests.dart';
 import 'package:shopping_app/services/size_config.dart';
 
 import '../components/horizontal_scrollList.dart';
+import 'cartScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -69,13 +70,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
               },
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Icon(
+            OutlinedButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartScreen(),
+                  ),
+                );
+              },
+              icon: Icon(
                 Icons.shopping_bag_outlined,
                 color: Colors.black,
               ),
-            ),
+              style: OutlinedButton.styleFrom(side: BorderSide.none),
+              label: Text(''),
+            )
           ],
           title: const Text(
             'Your Digital Store',
