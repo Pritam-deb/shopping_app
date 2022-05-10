@@ -3,6 +3,8 @@ import 'package:shopping_app/model/product.dart';
 
 class ProductProvider extends ChangeNotifier {
   List<Product> productList = [];
+  List<String> cart = [];
+  List<String> wishlist = [];
 
   void addProducts(List<dynamic> data) {
     for (var i = 0; i < data.length; i++) {

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_app/components/price_text.dart';
 import 'package:shopping_app/model/product.dart';
-import 'package:shopping_app/screens/homeScreen.dart';
+import 'package:shopping_app/screens/home_screen.dart';
+import 'package:shopping_app/services/size_config.dart';
 import 'package:shopping_app/utils/helpers.dart';
+import 'package:shopping_app/view_model/cart_provider.dart';
 
 class DetailsPage extends StatefulWidget {
   const DetailsPage({
@@ -32,12 +36,14 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
-        title: const Text(
-          "Details",
-          style: TextStyle(
-            color: Colors.black,
+        actions: const [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Icon(
+              Icons.favorite_border,
+            ),
           ),
-        ),
+        ],
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 30),
@@ -53,21 +59,18 @@ class _DetailsPageState extends State<DetailsPage> {
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
-                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
             Center(
-              child: Text(
-                '\u{20AC} ${widget.product.price}',
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: PriceText(
+                price: widget.product.price,
+                fontSize: 20,
               ),
             ),
             Hero(
-              tag: widget.product.name + widget.listName,
+              tag: widget.product.id + widget.listName,
               child: Container(
                 margin: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -132,21 +135,25 @@ class _DetailsPageState extends State<DetailsPage> {
                 children: [
                   ButtonOutlined(
                     name: 'SD',
+                    highlightColor: Colors.orange,
                     selectedTab: selectedTab,
                     changeTab: changeTab,
                   ),
                   ButtonOutlined(
                     name: 'HD',
+                    highlightColor: Colors.orange,
                     changeTab: changeTab,
                     selectedTab: selectedTab,
                   ),
                   ButtonOutlined(
                     name: 'UHD',
+                    highlightColor: Colors.orange,
                     changeTab: changeTab,
                     selectedTab: selectedTab,
                   ),
                   ButtonOutlined(
                     name: 'BluRay',
+                    highlightColor: Colors.orange,
                     changeTab: changeTab,
                     selectedTab: selectedTab,
                   ),
@@ -162,43 +169,31 @@ class _DetailsPageState extends State<DetailsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      const Text(
-                        '\u{20AC} ',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.orange,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        '${widget.product.price}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+                  PriceText(
+                    price: widget.product.price,
+                    fontSize: 25,
                   ),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 20),
-                      primary: Colors.white,
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  Consumer<CartProvider>(
+                    builder: (context, _provider, child) => OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 20),
+                        primary: Colors.white,
+                        backgroundColor:
+                            _provider.cart.contains(widget.product.id)
+                                ? Colors.black
+                                : Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
+                      onPressed: () {
+                        _provider.updateCart(widget.product.id);
+                      },
+                      child: Text(_provider.cart.contains(widget.product.id)
+                          ? "Add to Cart"
+                          : "Remove from Cart"),
                     ),
-                    onPressed: () {
-                      // ADD to cart
-                    },
-                    child: const Text("Add to Cart"),
                   ),
                 ],
               ),
