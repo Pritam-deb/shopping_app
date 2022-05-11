@@ -12,4 +12,13 @@ class ProductProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  Product getProduct(String id) {
+    for (var product in productList) {
+      if (product.id == id) {
+        return product;
+      }
+    }
+    return productList[0];
+  }
 }

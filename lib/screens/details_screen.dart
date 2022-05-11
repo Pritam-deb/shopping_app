@@ -5,6 +5,7 @@ import 'package:shopping_app/model/product.dart';
 import 'package:shopping_app/screens/home_screen.dart';
 import 'package:shopping_app/services/size_config.dart';
 import 'package:shopping_app/utils/helpers.dart';
+import 'package:shopping_app/utils/text_styles.dart';
 import 'package:shopping_app/view_model/cart_provider.dart';
 
 class DetailsPage extends StatefulWidget {
@@ -55,10 +56,7 @@ class _DetailsPageState extends State<DetailsPage> {
               child: Center(
                 child: Text(
                   Helper().getName(widget.product.name),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: CustomTextStyles().h1,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -94,14 +92,11 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 20, left: 10, bottom: 10),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, left: 10, bottom: 10),
               child: Text(
                 "Description",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: CustomTextStyles().h2,
                 textAlign: TextAlign.left,
               ),
             ),
@@ -116,14 +111,11 @@ class _DetailsPageState extends State<DetailsPage> {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 20, left: 10, bottom: 10),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, left: 10, bottom: 10),
               child: Text(
                 "Select Quality",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: CustomTextStyles().h2,
                 textAlign: TextAlign.left,
               ),
             ),

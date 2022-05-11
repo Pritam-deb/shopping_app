@@ -2,11 +2,30 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app/components/cart_tile.dart';
+import 'package:shopping_app/components/price_text.dart';
+import 'package:shopping_app/model/product.dart';
+import 'package:shopping_app/utils/text_styles.dart';
+import 'package:shopping_app/view_model/cart_provider.dart';
 
 import '../view_model/product_provider.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  double subtotal = 0.0;
+  double shipping = 5.0;
+
+  void updateSubtotal(double num) {
+    setState(() {
+      subtotal += num;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,257 +40,98 @@ class CartScreen extends StatelessWidget {
             'My Cart',
             style: TextStyle(color: Colors.grey),
           ),
-          actions: const [
-            Icon(
-              Icons.shopping_bag_outlined,
-              color: Colors.black,
-            ),
-          ],
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Consumer<ProductProvider>(
-                  builder: (context, _provider, child) => _provider
-                          .productList.isNotEmpty
-                      ? Container(
-                          margin: const EdgeInsets.symmetric(vertical: 20.0),
-                          height: 200.0,
-                          width: 160,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Container(
-                              // width: 160.0,
-                              child: Card(
-                                child: Image.network(
-                                  _provider.productList[0].imageUrl,
-                                  fit: BoxFit.cover,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
+        child: Consumer<CartProvider>(
+          builder: (context, _provider, child) => _provider.cart.isNotEmpty
+              ? Column(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _provider.cart.length,
+                      itemBuilder: (context, index) {
+                        Product product = Provider.of<ProductProvider>(context)
+                            .getProduct(_provider.cart[index]);
+                        return CartTile(
+                          product: product,
+                          updateSubtotal: updateSubtotal,
+                        );
+                      },
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Promo/Student Code or Vouchers',
+                          style: CustomTextStyles().h2,
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Sub Total',
+                              style: CustomTextStyles().greyText,
                             ),
-                          ))
-                      : const Text('Nothing yet :('),
-                ),
-                Consumer<ProductProvider>(
-                  builder: (context, _provider, child) => _provider
-                          .productList.isNotEmpty
-                      ? Container(
-                          margin: const EdgeInsets.symmetric(vertical: 20.0),
-                          height: 200.0,
-                          width: 190,
-                          child: Card(
-                            elevation: 0,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _provider.productList[0].name,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  'Size: ',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 13),
-                                ),
-                                Text(
-                                  '\$' +
-                                      _provider.productList[0].price.toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CounterList(),
-                                    Icon(
-                                      Icons.close_outlined,
-                                      size: 15,
-                                      color: Colors.grey,
-                                    ),
-                                  ],
-                                )
-                              ],
+                            PriceText(price: subtotal, fontSize: 20),
+                          ]),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Shipping',
+                              style: CustomTextStyles().greyText,
                             ),
+                            PriceText(price: shipping, fontSize: 20),
+                          ]),
+                    ),
+                    // Add horizontal dotted line
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total',
+                              style: CustomTextStyles().greyText,
+                            ),
+                            PriceText(price: subtotal + shipping, fontSize: 20),
+                          ]),
+                    ),
+                    // Convert this button into a widget
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 30),
+                      width: double.infinity,
+                      child: OutlinedButton(
+                        onPressed: () {},
+                        child: const Text("Checkout"),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 20),
+                          primary: Colors.white,
+                          backgroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        )
-                      : const Text('Nothing yet'),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Consumer<ProductProvider>(
-                  builder: (context, _provider, child) => _provider
-                          .productList.isNotEmpty
-                      ? Container(
-                          margin: const EdgeInsets.symmetric(vertical: 20.0),
-                          height: 200.0,
-                          width: 160,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Container(
-                              // width: 160.0,
-                              child: Card(
-                                child: Image.network(
-                                  _provider.productList[1].imageUrl,
-                                  fit: BoxFit.cover,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                              ),
-                            ),
-                          ))
-                      : const Text('Nothing yet :('),
-                ),
-                Consumer<ProductProvider>(
-                  builder: (context, _provider, child) => _provider
-                          .productList.isNotEmpty
-                      ? Container(
-                          margin: const EdgeInsets.symmetric(vertical: 20.0),
-                          height: 200.0,
-                          width: 190,
-                          child: Card(
-                            elevation: 0,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _provider.productList[1].name,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  'Size: ',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 13),
-                                ),
-                                Text(
-                                  '\$' +
-                                      _provider.productList[1].price.toString(),
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CounterList(),
-                                    Icon(
-                                      Icons.close_outlined,
-                                      size: 15,
-                                      color: Colors.grey,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        )
-                      : const Text('Nothing yet'),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Promo/Student Code or Vouchers',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 15,
-                  color: Colors.grey,
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Sub Total',
-                      style: TextStyle(color: Colors.grey, fontSize: 13),
+                        ),
+                      ),
                     ),
-                    Text(
-                      '\$Price',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Shipping',
-                      style: TextStyle(color: Colors.grey, fontSize: 13),
-                    ),
-                    Text(
-                      '\$10',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ]),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-              child: Text(
-                '------------------------------------------------------',
-                style: TextStyle(color: Color.fromARGB(255, 198, 198, 198)),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Total',
-                      style: TextStyle(color: Colors.grey, fontSize: 13),
-                    ),
-                    Text(
-                      '\$Total',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-              child: TextButton(
-                onPressed: () {},
-                child: const Text('Checkout'),
-                // style: TextButton.styleFrom(
-                //     primary: Colors.white,
-                //     backgroundColor: Colors.black,
-                //     fixedSize: Size(350, 20),
-
-                //     ),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  fixedSize:
-                      MaterialStateProperty.all<Size>(Size.fromWidth(350)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
+                  ],
+                )
+              : Container(),
         ),
       ),
     );
@@ -279,38 +139,84 @@ class CartScreen extends StatelessWidget {
 }
 
 class CounterList extends StatefulWidget {
-  const CounterList({Key? key}) : super(key: key);
+  const CounterList({
+    Key? key,
+    required this.updateSubtotal,
+    required this.price,
+  }) : super(key: key);
+
+  final Function updateSubtotal;
+  final double price;
 
   @override
   State<CounterList> createState() => _CounterListState();
 }
 
 class _CounterListState extends State<CounterList> {
-  int _itemCount = 0;
+  int _itemCount = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      widget.updateSubtotal(widget.price);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        IconButton(
-          iconSize: 15,
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              Future.delayed(Duration.zero, () async {
+                widget.updateSubtotal(-widget.price);
+              });
+              _itemCount = _itemCount > 0 ? _itemCount - 1 : _itemCount;
+            });
+          },
+          child: Container(
+            padding: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(5)),
+            child: const Icon(
+              Icons.remove,
+              size: 16,
+            ),
+          ),
+        ),
+        Text(
+          _itemCount.toString(),
+          style: CustomTextStyles().h2,
+        ),
+        GestureDetector(
+          onTap: () {
             setState(() {
               _itemCount = _itemCount + 1;
+              Future.delayed(Duration.zero, () async {
+                widget.updateSubtotal(widget.price);
+              });
             });
           },
-          icon: Icon(Icons.add),
-          // label: Text(''),
-        ),
-        Text(_itemCount.toString()),
-        IconButton(
-          iconSize: 15,
-          onPressed: () {
-            setState(() {
-              _itemCount = _itemCount - 1;
-            });
-          },
-          icon: Icon(Icons.remove),
-          // label: Text(''),
+          child: Container(
+            padding: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(5)),
+            child: const Icon(
+              Icons.add,
+              size: 16,
+            ),
+          ),
         ),
       ],
     );

@@ -27,7 +27,7 @@ class PriceText extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         Text(
-          price.toString(),
+          price.toStringAsFixed(2),
           style: TextStyle(
             fontSize: fontSize.toFont,
             fontWeight: FontWeight.bold,

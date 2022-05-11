@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/components/Carousel.dart';
+import 'package:shopping_app/utils/text_styles.dart';
 import 'package:shopping_app/view_model/product_provider.dart';
 import 'package:shopping_app/services/network_requests.dart';
 import 'package:shopping_app/services/size_config.dart';
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CartScreen(),
+                    builder: (context) => const CartScreen(),
                   ),
                 );
               },
@@ -84,17 +85,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.black,
               ),
               style: OutlinedButton.styleFrom(side: BorderSide.none),
-              label: Text(''),
+              label: const Text(''),
             )
           ],
-          title: const Text(
+          title: Text(
             'Your Digital Store',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
+            style: CustomTextStyles().h1,
           ),
         ),
       ),
