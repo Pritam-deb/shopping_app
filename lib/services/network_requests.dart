@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:shopping_app/model/productProvider.dart';
+import 'package:shopping_app/view_model/product_provider.dart';
 import 'package:shopping_app/utils/strings.dart';
 
 class NetworkRequests {

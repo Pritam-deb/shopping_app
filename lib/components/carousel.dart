@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:shopping_app/model/product.dart';
-import 'package:shopping_app/utils/helpers.dart';
+import 'package:shopping_app/components/carousel_card.dart';
 
 class Carousel extends StatefulWidget {
   const Carousel({
@@ -60,71 +59,13 @@ class _CarouselState extends State<Carousel> {
           angle: rotateValue,
           child: Transform.scale(
             scale: 1 - scaleValue,
-            child: CarouselCard(product: widget.productList[index]),
+            child: CarouselCard(
+              product: widget.productList[index],
+              listName: "Carousel",
+            ),
           ),
         );
       },
-    );
-  }
-}
-
-class CarouselCard extends StatelessWidget {
-  const CarouselCard({
-    Key? key,
-    required this.product,
-  }) : super(key: key);
-
-  final Product product;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.6),
-                  spreadRadius: 0,
-                  blurRadius: 5,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(30),
-            ),
-            height: 250,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: Image.network(
-                product.imageUrl,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 8, bottom: 8),
-          child: Text(
-            Helper().getName(product.name),
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        Text(
-          '\u{20AC} ${product.price}',
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
     );
   }
 }

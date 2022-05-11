@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/components/Carousel.dart';
-import 'package:shopping_app/model/productProvider.dart';
+import 'package:shopping_app/view_model/product_provider.dart';
 import 'package:shopping_app/services/network_requests.dart';
 import 'package:shopping_app/services/size_config.dart';
 
-import '../components/horizontal_scrollList.dart';
-import 'cartScreen.dart';
+import '../components/horizontal_list.dart';
+import 'cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.shopping_bag_outlined,
                 color: Colors.black,
               ),
@@ -109,21 +109,25 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 ButtonOutlined(
                   name: 'All',
+                  highlightColor: Colors.black,
                   selectedTab: selectedTab,
                   changeTab: changeTab,
                 ),
                 ButtonOutlined(
                   name: 'Action and Adventure',
+                  highlightColor: Colors.black,
                   changeTab: changeTab,
                   selectedTab: selectedTab,
                 ),
                 ButtonOutlined(
                   name: 'Comedy',
+                  highlightColor: Colors.black,
                   changeTab: changeTab,
                   selectedTab: selectedTab,
                 ),
                 ButtonOutlined(
                   name: 'Drama',
+                  highlightColor: Colors.black,
                   changeTab: changeTab,
                   selectedTab: selectedTab,
                 ),
@@ -159,11 +163,14 @@ class ButtonOutlined extends StatelessWidget {
     required this.name,
     required this.selectedTab,
     required this.changeTab,
+    required this.highlightColor,
   }) : super(key: key);
 
   final String name;
   final String selectedTab;
   final Function changeTab;
+  final Color highlightColor;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -171,7 +178,7 @@ class ButtonOutlined extends StatelessWidget {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           primary: selectedTab == name ? Colors.white : Colors.black,
-          backgroundColor: selectedTab == name ? Colors.black : Colors.white,
+          backgroundColor: selectedTab == name ? highlightColor : Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
