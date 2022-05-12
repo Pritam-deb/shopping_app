@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/size_config.dart';
 
 import '../model/product.dart';
 
@@ -100,7 +101,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                         Text(
                           '**** **** 0357 8420',
-                          style: TextStyle(color: Colors.grey, fontSize: 13),
+                          style: TextStyle(
+                              color: Colors.grey, fontSize: 13.toFont),
                         )
                       ],
                     ),
@@ -132,7 +134,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                         Text(
                           '**** **** 0357 8420',
-                          style: TextStyle(color: Colors.grey, fontSize: 13),
+                          style: TextStyle(
+                              color: Colors.grey, fontSize: 13.toFont),
                         )
                       ],
                     ),
@@ -164,7 +167,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                         Text(
                           '**** **** 0357 8420',
-                          style: TextStyle(color: Colors.grey, fontSize: 13),
+                          style: TextStyle(
+                              color: Colors.grey, fontSize: 13.toFont),
                         )
                       ],
                     ),
@@ -200,11 +204,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               children: [
                 Text(
                   'Total',
-                  style: TextStyle(color: Colors.grey, fontSize: 13),
+                  style: TextStyle(color: Colors.grey, fontSize: 13.toFont),
                 ),
                 Text(
                   '\$ 420.69',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 17.toFont),
                 )
               ],
             ),
