@@ -8,7 +8,10 @@ import 'package:shopping_app/model/product.dart';
 import 'package:shopping_app/services/size_config.dart';
 import 'package:shopping_app/utils/text_styles.dart';
 import 'package:shopping_app/view_model/cart_provider.dart';
+import 'package:shopping_app/screens/checkout_screen.dart';
 
+import '../routes/route_names.dart';
+import '../routes/routes.dart';
 import '../view_model/product_provider.dart';
 
 class CartScreen extends StatefulWidget {
@@ -119,7 +122,12 @@ class _CartScreenState extends State<CartScreen> {
                       margin: const EdgeInsets.symmetric(vertical: 30),
                       width: double.infinity,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          SetupRoutes.push(
+                            context,
+                            Routes.CHECKOUT,
+                          );
+                        },
                         child: const Text("Checkout"),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(

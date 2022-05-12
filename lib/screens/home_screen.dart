@@ -74,16 +74,16 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             OutlinedButton.icon(
+              icon: const Icon(
+                Icons.shopping_bag_outlined,
+                color: Colors.black,
+              ),
               onPressed: () {
                 SetupRoutes.push(
                   context,
                   Routes.CART,
                 );
               },
-              icon: const Icon(
-                Icons.shopping_bag_outlined,
-                color: Colors.black,
-              ),
               style: OutlinedButton.styleFrom(side: BorderSide.none),
               label: const Text(''),
             )

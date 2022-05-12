@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/routes/route_names.dart';
 import 'package:shopping_app/screens/cart_screen.dart';
+import 'package:shopping_app/screens/checkout_screen.dart';
 import 'package:shopping_app/screens/details_screen.dart';
 import 'package:shopping_app/screens/home_screen.dart';
 
@@ -11,14 +12,15 @@ class SetupRoutes {
     return {
       Routes.HOME: (context) => const HomeScreen(),
       Routes.DETAILS: (context) {
-        Map<String, dynamic> args =
-            ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+        Map<String, dynamic> args = ModalRoute.of(context)!.settings.arguments
+            as Map<String, dynamic>; //MANDATORY COPY PASTE
         return DetailsPage(
           product: args['product'],
           listName: args['listName'],
         );
       },
       Routes.CART: (context) => const CartScreen(),
+      Routes.CHECKOUT: (context) => const CheckoutScreen(),
     };
   }
 
