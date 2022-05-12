@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app/screens/checkout_screen.dart';
 
 import '../view_model/product_provider.dart';
 
@@ -149,7 +150,7 @@ class CartScreen extends StatelessWidget {
                                   _provider.productList[1].name,
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
-                                Text(
+                                const Text(
                                   'Size: ',
                                   style: TextStyle(
                                       color: Colors.grey, fontSize: 13),
@@ -181,7 +182,7 @@ class CartScreen extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: const [
                 Text(
                   'Promo/Student Code or Vouchers',
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -197,7 +198,7 @@ class CartScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: const [
                     Text(
                       'Sub Total',
                       style: TextStyle(color: Colors.grey, fontSize: 13),
@@ -212,7 +213,7 @@ class CartScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: const [
                     Text(
                       'Shipping',
                       style: TextStyle(color: Colors.grey, fontSize: 13),
@@ -223,7 +224,7 @@ class CartScreen extends StatelessWidget {
                     ),
                   ]),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
               child: Text(
                 '------------------------------------------------------',
@@ -233,29 +234,31 @@ class CartScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Total',
-                      style: TextStyle(color: Colors.grey, fontSize: 13),
-                    ),
-                    Text(
-                      '\$Total',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ]),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    'Total',
+                    style: TextStyle(color: Colors.grey, fontSize: 13),
+                  ),
+                  Text(
+                    '\$Total',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CheckoutScreen(),
+                    ),
+                  );
+                },
                 child: const Text('Checkout'),
-                // style: TextButton.styleFrom(
-                //     primary: Colors.white,
-                //     backgroundColor: Colors.black,
-                //     fixedSize: Size(350, 20),
-
-                //     ),
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(Colors.black),
