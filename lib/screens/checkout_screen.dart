@@ -73,6 +73,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
                 Icon(
                   Icons.arrow_forward_ios,
+                  size: 15.0,
                   color: Colors.grey,
                 )
               ],
@@ -179,6 +180,53 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   },
                 )
               ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'My Cart',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.grey,
+                  size: 15.0,
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Total',
+                  style: TextStyle(color: Colors.grey, fontSize: 13),
+                ),
+                Text(
+                  '\$ 420.69',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+              child: TextButton(
+                onPressed: () {},
+                child: const Text('Pay Now'),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                  fixedSize:
+                      MaterialStateProperty.all<Size>(Size.fromWidth(350)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
+              ),
             )
           ],
         ),
