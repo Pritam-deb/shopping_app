@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app/components/outlined_tab.dart';
 import 'package:shopping_app/components/price_text.dart';
 import 'package:shopping_app/model/product.dart';
-import 'package:shopping_app/screens/home_screen.dart';
 import 'package:shopping_app/services/size_config.dart';
 import 'package:shopping_app/utils/helpers.dart';
 import 'package:shopping_app/utils/text_styles.dart';
@@ -64,7 +64,7 @@ class _DetailsPageState extends State<DetailsPage> {
             Center(
               child: PriceText(
                 price: widget.product.price,
-                fontSize: 20,
+                fontSize: 20.toFont,
               ),
             ),
             Hero(
@@ -125,25 +125,25 @@ class _DetailsPageState extends State<DetailsPage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  ButtonOutlined(
+                  OutlinedTab(
                     name: 'SD',
                     highlightColor: Colors.orange,
                     selectedTab: selectedTab,
                     changeTab: changeTab,
                   ),
-                  ButtonOutlined(
+                  OutlinedTab(
                     name: 'HD',
                     highlightColor: Colors.orange,
                     changeTab: changeTab,
                     selectedTab: selectedTab,
                   ),
-                  ButtonOutlined(
+                  OutlinedTab(
                     name: 'UHD',
                     highlightColor: Colors.orange,
                     changeTab: changeTab,
                     selectedTab: selectedTab,
                   ),
-                  ButtonOutlined(
+                  OutlinedTab(
                     name: 'BluRay',
                     highlightColor: Colors.orange,
                     changeTab: changeTab,
@@ -163,7 +163,7 @@ class _DetailsPageState extends State<DetailsPage> {
                 children: [
                   PriceText(
                     price: widget.product.price,
-                    fontSize: 25,
+                    fontSize: 25.toFont,
                   ),
                   Consumer<CartProvider>(
                     builder: (context, _provider, child) => OutlinedButton(

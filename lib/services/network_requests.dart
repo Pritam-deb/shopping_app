@@ -8,6 +8,10 @@ import 'package:shopping_app/view_model/product_provider.dart';
 import 'package:shopping_app/utils/strings.dart';
 
 class NetworkRequests {
+  NetworkRequests._();
+  static final NetworkRequests _instance = NetworkRequests._();
+  factory NetworkRequests() => _instance;
+
   void fetchProducts(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     String res;

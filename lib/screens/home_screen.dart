@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/components/Carousel.dart';
+import 'package:shopping_app/components/outlined_tab.dart';
+import 'package:shopping_app/routes/route_names.dart';
+import 'package:shopping_app/routes/routes.dart';
 import 'package:shopping_app/utils/text_styles.dart';
 import 'package:shopping_app/view_model/product_provider.dart';
 import 'package:shopping_app/services/network_requests.dart';
 import 'package:shopping_app/services/size_config.dart';
 
 import '../components/horizontal_list.dart';
-import 'cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -49,10 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 setState(() {
                   if (customIcon.icon == Icons.search) {
                     customIcon = const Icon(Icons.cancel);
-                    customSearchBar = const SizedBox(
-                      width: 150,
-                      height: 20,
-                      child: TextField(
+                    customSearchBar = SizedBox(
+                      width: 150.toWidth,
+                      height: 20.toHeight,
+                      child: const TextField(
                         decoration: InputDecoration(
                           hintText: 'search movies',
                           hintStyle: TextStyle(
@@ -73,11 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             OutlinedButton.icon(
               onPressed: () {
-                Navigator.push(
+                SetupRoutes.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const CartScreen(),
-                  ),
+                  Routes.CART,
                 );
               },
               icon: const Icon(
@@ -100,29 +100,29 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Container(
             padding: const EdgeInsets.all(8.0),
-            height: 60,
+            height: 60.toHeight,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                ButtonOutlined(
+                OutlinedTab(
                   name: 'All',
                   highlightColor: Colors.black,
                   selectedTab: selectedTab,
                   changeTab: changeTab,
                 ),
-                ButtonOutlined(
+                OutlinedTab(
                   name: 'Action and Adventure',
                   highlightColor: Colors.black,
                   changeTab: changeTab,
                   selectedTab: selectedTab,
                 ),
-                ButtonOutlined(
+                OutlinedTab(
                   name: 'Comedy',
                   highlightColor: Colors.black,
                   changeTab: changeTab,
                   selectedTab: selectedTab,
                 ),
-                ButtonOutlined(
+                OutlinedTab(
                   name: 'Drama',
                   highlightColor: Colors.black,
                   changeTab: changeTab,
@@ -149,41 +149,6 @@ class _HomeScreenState extends State<HomeScreen> {
             screenWidth: MediaQuery.of(context).size.width,
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ButtonOutlined extends StatelessWidget {
-  const ButtonOutlined({
-    Key? key,
-    required this.name,
-    required this.selectedTab,
-    required this.changeTab,
-    required this.highlightColor,
-  }) : super(key: key);
-
-  final String name;
-  final String selectedTab;
-  final Function changeTab;
-  final Color highlightColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: OutlinedButton(
-        style: OutlinedButton.styleFrom(
-          primary: selectedTab == name ? Colors.white : Colors.black,
-          backgroundColor: selectedTab == name ? highlightColor : Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        onPressed: () {
-          changeTab(name);
-        },
-        child: Text(name),
       ),
     );
   }

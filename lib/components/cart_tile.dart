@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/components/counter_list.dart';
 import 'package:shopping_app/components/price_text.dart';
 import 'package:shopping_app/model/product.dart';
-import 'package:shopping_app/screens/cart_screen.dart';
+import 'package:shopping_app/services/size_config.dart';
 
 class CartTile extends StatelessWidget {
   const CartTile({
@@ -29,7 +30,7 @@ class CartTile extends StatelessWidget {
             ],
             borderRadius: BorderRadius.circular(30),
           ),
-          height: 180,
+          height: 180.toHeight,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: Image.network(
@@ -39,7 +40,7 @@ class CartTile extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 160,
+          height: 160.toHeight,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,7 +54,7 @@ class CartTile extends StatelessWidget {
                   ),
                 ),
               ),
-              PriceText(price: product.price, fontSize: 16),
+              PriceText(price: product.price, fontSize: 16.toFont),
               SizedBox(
                 width: 100,
                 child: CounterList(

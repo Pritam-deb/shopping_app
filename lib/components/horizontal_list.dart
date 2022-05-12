@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/components/carousel_card.dart';
+import 'package:shopping_app/services/size_config.dart';
 import 'package:shopping_app/utils/strings.dart';
 import 'package:shopping_app/view_model/product_provider.dart';
 
@@ -28,7 +29,7 @@ class _HorizontalScrollableListState extends State<HorizontalScrollableList> {
               Text(
                 Strings().hrListOne,
                 style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    TextStyle(fontSize: 18.toFont, fontWeight: FontWeight.bold),
               ),
               Text(Strings().seeAll),
             ],
@@ -39,7 +40,7 @@ class _HorizontalScrollableListState extends State<HorizontalScrollableList> {
               _provider.productList.isNotEmpty
                   ? Container(
                       margin: const EdgeInsets.symmetric(vertical: 20.0),
-                      height: 300,
+                      height: 300.toHeight,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: _provider.productList.length,

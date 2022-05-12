@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/components/price_text.dart';
 import 'package:shopping_app/model/product.dart';
+import 'package:shopping_app/routes/route_names.dart';
+import 'package:shopping_app/routes/routes.dart';
 import 'package:shopping_app/screens/details_screen.dart';
 import 'package:shopping_app/services/size_config.dart';
 import 'package:shopping_app/utils/helpers.dart';
@@ -22,15 +24,14 @@ class CarouselCard extends StatelessWidget {
         Expanded(
           child: GestureDetector(
             onTap: () => {
-              Navigator.push(
+              SetupRoutes.push(
                 context,
-                MaterialPageRoute(
-                  builder: ((context) => DetailsPage(
-                        product: product,
-                        listName: listName,
-                      )),
-                ),
-              )
+                Routes.DETAILS,
+                arguments: {
+                  'product': product,
+                  'listName': listName,
+                },
+              ),
             },
             child: Hero(
               tag: product.id + listName,
@@ -46,7 +47,7 @@ class CarouselCard extends StatelessWidget {
                   ],
                   borderRadius: BorderRadius.circular(30),
                 ),
-                height: 250,
+                height: 250.toHeight,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Image.network(
@@ -72,7 +73,7 @@ class CarouselCard extends StatelessWidget {
         ),
         PriceText(
           price: product.price,
-          fontSize: 18,
+          fontSize: 18.toFont,
         )
       ],
     );
