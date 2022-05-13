@@ -61,6 +61,7 @@ class _CartScreenState extends State<CartScreen> {
                         return CartTile(
                           product: product,
                           updateSubtotal: updateSubtotal,
+                          showCounter: true,
                         );
                       },
                     ),
@@ -142,7 +143,10 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ],
                 )
-              : Container(),
+              : Center(
+                  child: Text('opps! nothing added to the cart🛒',
+                      style: CustomTextStyles().h2),
+                ),
         ),
       ),
     );

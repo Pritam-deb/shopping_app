@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../components/carousel_card.dart';
+import '../components/cart_tile.dart';
 import '../services/size_config.dart';
 
 import '../model/product.dart';
+import '../view_model/cart_provider.dart';
+import '../view_model/product_provider.dart';
 
 enum PaymentCard { applePay, masterCard, visaCard }
 
@@ -14,6 +19,14 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   PaymentCard? _card = PaymentCard.applePay;
+  void updateSubtotal(double num) {
+    setState(() {
+      subtotal += num;
+    });
+  }
+
+  double subtotal = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -198,6 +211,27 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   size: 15.0,
                 )
               ],
+            ),
+            Consumer<CartProvider>(
+              builder: (context, _provider, child) => _provider.cart.isNotEmpty
+                  ? Container(
+                      // margin: const EdgeInsets.symmetric(vertical: 20.0),
+                      height: 140.toHeight,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _provider.cart.length,
+                          itemBuilder: (context, index) {
+                            Product product =
+                                Provider.of<ProductProvider>(context)
+                                    .getProduct(_provider.cart[index]);
+                            return CartTile(
+                              product: product,
+                              updateSubtotal: updateSubtotal,
+                              showCounter: false,
+                            );
+                          }),
+                    )
+                  : const Text('Loading list...'),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
