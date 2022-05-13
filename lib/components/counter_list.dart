@@ -21,9 +21,11 @@ class _CounterListState extends State<CounterList> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       widget.updateSubtotal(widget.price);
     });
+    // Future.delayed(Duration.zero, () async {
+    // });
   }
 
   @override
@@ -33,12 +35,8 @@ class _CounterListState extends State<CounterList> {
       children: [
         GestureDetector(
           onTap: () {
-            setState(() {
-              Future.delayed(Duration.zero, () async {
-                widget.updateSubtotal(-widget.price);
-              });
-              _itemCount = _itemCount > 0 ? _itemCount - 1 : _itemCount;
-            });
+            _itemCount = _itemCount > 0 ? _itemCount - 1 : _itemCount;
+            widget.updateSubtotal(-widget.price);
           },
           child: Container(
             padding: const EdgeInsets.all(2),
@@ -60,12 +58,8 @@ class _CounterListState extends State<CounterList> {
         ),
         GestureDetector(
           onTap: () {
-            setState(() {
-              _itemCount = _itemCount + 1;
-              Future.delayed(Duration.zero, () async {
-                widget.updateSubtotal(widget.price);
-              });
-            });
+            _itemCount = _itemCount + 1;
+            widget.updateSubtotal(widget.price);
           },
           child: Container(
             padding: const EdgeInsets.all(2),

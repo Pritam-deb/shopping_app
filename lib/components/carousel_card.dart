@@ -48,6 +48,7 @@ class CarouselCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 height: 250.toHeight,
+                width: double.infinity,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Image.network(
