@@ -7,6 +7,7 @@ class ProductProvider extends ChangeNotifier {
   List<String> wishlist = [];
 
   void addProducts(List<dynamic> data) {
+    productList.clear();
     for (var i = 0; i < data.length; i++) {
       productList.add(Product.fromJson(data[i]));
     }

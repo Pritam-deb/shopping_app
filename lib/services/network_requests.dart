@@ -12,16 +12,59 @@ class NetworkRequests {
   static final NetworkRequests _instance = NetworkRequests._();
   factory NetworkRequests() => _instance;
 
-  void fetchProducts(BuildContext context) async {
+  void fetchProducts(BuildContext context, selectedTab) async {
     final prefs = await SharedPreferences.getInstance();
     String res;
 
-    if (prefs.getString('allData') != null) {
-      res = prefs.getString('allData')!;
+    if (prefs.getString(selectedTab) != null) {
+      res = prefs.getString(selectedTab)!;
     } else {
-      final response = await http.get(Uri.parse(Strings().fetchUrl));
-      res = response.body;
-      prefs.setString('allData', res);
+      switch (selectedTab) {
+        case 'Horror':
+          {
+            final response = await http.get(Uri.parse(Strings().fetchHorror));
+            res = response.body;
+            prefs.setString(selectedTab, res);
+          }
+          break;
+        case 'Comedy':
+          {
+            final response = await http.get(Uri.parse(Strings().fetchComedy));
+            res = response.body;
+            prefs.setString(selectedTab, res);
+          }
+          break;
+        case 'Drama':
+          {
+            final response = await http.get(Uri.parse(Strings().fetchDrama));
+            res = response.body;
+            prefs.setString(selectedTab, res);
+          }
+          break;
+        case 'Documentary, Special Interests':
+          {
+            final response =
+                await http.get(Uri.parse(Strings().fetchDocumentary));
+            res = response.body;
+            prefs.setString(selectedTab, res);
+          }
+          break;
+        case 'Action and Adventure':
+          {
+            final response =
+                await http.get(Uri.parse(Strings().fetchAdventure));
+            res = response.body;
+            prefs.setString(selectedTab, res);
+          }
+          break;
+        default:
+          {
+            final response = await http.get(Uri.parse(Strings().fetchUrl));
+            res = response.body;
+            prefs.setString(selectedTab, res);
+          }
+          break;
+      }
     }
     final jsonData = json.decode(res);
     Provider.of<ProductProvider>(

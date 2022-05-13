@@ -22,7 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    NetworkRequests().fetchProducts(context);
+    NetworkRequests().fetchProducts(context, 'All');
+  }
+
+  void changeCategory(String selectedTab) {
+    NetworkRequests().fetchProducts(context, selectedTab);
   }
 
   String selectedTab = 'All';
@@ -31,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void changeTab(String newValue) {
     setState(() {
       selectedTab = newValue;
+      changeCategory(selectedTab);
     });
   }
 
@@ -111,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   changeTab: changeTab,
                 ),
                 OutlinedTab(
-                  name: 'Action and Adventure',
+                  name: 'Horror',
                   highlightColor: Colors.black,
                   changeTab: changeTab,
                   selectedTab: selectedTab,
@@ -124,6 +129,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 OutlinedTab(
                   name: 'Drama',
+                  highlightColor: Colors.black,
+                  changeTab: changeTab,
+                  selectedTab: selectedTab,
+                ),
+                OutlinedTab(
+                  name: 'Documentary, Special Interests',
+                  highlightColor: Colors.black,
+                  changeTab: changeTab,
+                  selectedTab: selectedTab,
+                ),
+                OutlinedTab(
+                  name: 'Action and Adventure',
                   highlightColor: Colors.black,
                   changeTab: changeTab,
                   selectedTab: selectedTab,
