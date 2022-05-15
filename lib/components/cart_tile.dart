@@ -39,30 +39,29 @@ class CartTile extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 160.toHeight,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: 200,
-                child: Text(
+        Expanded(
+          child: SizedBox(
+            height: 160.toHeight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
                   product.name,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              PriceText(price: product.price, fontSize: 16.toFont),
-              SizedBox(
-                width: 100,
-                child: CounterList(
-                  updateSubtotal: updateSubtotal,
-                  price: product.price,
+                PriceText(price: product.price, fontSize: 16.toFont),
+                SizedBox(
+                  width: 100,
+                  child: CounterList(
+                    updateSubtotal: updateSubtotal,
+                    price: product.price,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         )
       ],
