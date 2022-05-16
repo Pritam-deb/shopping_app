@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopping_app/components/Carousel.dart';
 import 'package:shopping_app/components/carousel_card.dart';
 import 'package:shopping_app/components/outlined_tab.dart';
+import 'package:shopping_app/firebase_options.dart';
 import 'package:shopping_app/model/product.dart';
 import 'package:shopping_app/routes/route_names.dart';
 import 'package:shopping_app/routes/routes.dart';
@@ -10,6 +11,7 @@ import 'package:shopping_app/utils/text_styles.dart';
 import 'package:shopping_app/view_model/product_provider.dart';
 import 'package:shopping_app/services/network_requests.dart';
 import 'package:shopping_app/services/size_config.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import '../components/horizontal_list.dart';
 
@@ -25,6 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     NetworkRequests().fetchProducts(context, 'All');
+
+    Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 
   void changeCategory(String selectedTab) {
