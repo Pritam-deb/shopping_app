@@ -4,6 +4,7 @@ import 'package:shopping_app/screens/cart_screen.dart';
 import 'package:shopping_app/screens/checkout_screen.dart';
 import 'package:shopping_app/screens/details_screen.dart';
 import 'package:shopping_app/screens/home_screen.dart';
+import 'package:shopping_app/screens/sign_screen.dart';
 
 class SetupRoutes {
   static String initialRoute = Routes.HOME;
@@ -21,6 +22,7 @@ class SetupRoutes {
       },
       Routes.CART: (context) => const CartScreen(),
       Routes.CHECKOUT: (context) => const CheckoutScreen(),
+      Routes.LOGIN: (context) => const SignScreen(),
     };
   }
 

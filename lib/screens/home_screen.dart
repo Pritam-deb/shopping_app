@@ -77,19 +77,38 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             !searchActive
-                ? OutlinedButton.icon(
-                    icon: const Icon(
-                      Icons.shopping_bag_outlined,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      SetupRoutes.push(
-                        context,
-                        Routes.CART,
-                      );
-                    },
-                    style: OutlinedButton.styleFrom(side: BorderSide.none),
-                    label: const Text(''),
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      OutlinedButton.icon(
+                        icon: const Icon(
+                          Icons.shopping_bag_outlined,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          SetupRoutes.push(
+                            context,
+                            Routes.CART,
+                          );
+                        },
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        label: const Text(''),
+                      ),
+                      OutlinedButton.icon(
+                        icon: const Icon(
+                          Icons.login_outlined,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          SetupRoutes.push(
+                            context,
+                            Routes.LOGIN,
+                          );
+                        },
+                        style: OutlinedButton.styleFrom(side: BorderSide.none),
+                        label: const Text(''),
+                      )
+                    ],
                   )
                 : Container()
           ],
