@@ -65,6 +65,7 @@ class _DetailsPageState extends State<DetailsPage> {
               child: PriceText(
                 price: widget.product.price,
                 fontSize: 20.toFont,
+                center: true,
               ),
             ),
             Hero(
@@ -164,6 +165,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   PriceText(
                     price: widget.product.price,
                     fontSize: 25.toFont,
+                    center: true,
                   ),
                   Consumer<CartProvider>(
                     builder: (context, _provider, child) => OutlinedButton(

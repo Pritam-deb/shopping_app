@@ -6,15 +6,18 @@ class PriceText extends StatelessWidget {
     Key? key,
     required this.price,
     required this.fontSize,
+    required this.center,
   }) : super(key: key);
 
   final double price;
   final double fontSize;
+  final bool center;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment:
+          center ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
         Text(
           '\u{20AC} ',

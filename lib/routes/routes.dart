@@ -12,15 +12,21 @@ class SetupRoutes {
     return {
       Routes.HOME: (context) => const HomeScreen(),
       Routes.DETAILS: (context) {
-        Map<String, dynamic> args = ModalRoute.of(context)!.settings.arguments
-            as Map<String, dynamic>; //MANDATORY COPY PASTE
+        Map<String, dynamic> args =
+            ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
         return DetailsPage(
           product: args['product'],
           listName: args['listName'],
         );
       },
       Routes.CART: (context) => const CartScreen(),
-      Routes.CHECKOUT: (context) => const CheckoutScreen(),
+      Routes.CHECKOUT: (context) {
+        Map<String, dynamic> args =
+            ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+        return CheckoutScreen(
+          subTotal: args['subTotal'],
+        );
+      },
     };
   }
 
