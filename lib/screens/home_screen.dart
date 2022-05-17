@@ -28,9 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     NetworkRequests().fetchProducts(context, 'All');
 
-    Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+    // Firebase.initializeApp(
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    // );
   }
 
   void changeCategory(String selectedTab) {
