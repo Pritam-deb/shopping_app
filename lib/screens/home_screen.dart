@@ -8,6 +8,7 @@ import 'package:shopping_app/model/product.dart';
 import 'package:shopping_app/routes/route_names.dart';
 import 'package:shopping_app/routes/routes.dart';
 import 'package:shopping_app/utils/text_styles.dart';
+import 'package:shopping_app/view_model/cart_provider.dart';
 import 'package:shopping_app/view_model/product_provider.dart';
 import 'package:shopping_app/services/network_requests.dart';
 import 'package:shopping_app/services/size_config.dart';
@@ -83,13 +84,16 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             !searchActive
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      OutlinedButton.icon(
-                        icon: const Icon(
-                          Icons.shopping_bag_outlined,
-                          color: Colors.black,
+                ? Consumer<CartProvider>(
+                    builder: ((context, _provider, child) {
+                      return OutlinedButton.icon(
+                        icon: Icon(
+                          _provider.cart.isEmpty
+                              ? Icons.shopping_bag_outlined
+                              : Icons.shopping_bag_rounded,
+                          color: _provider.cart.isEmpty
+                              ? Colors.black
+                              : Colors.orange,
                         ),
                         onPressed: () {
                           SetupRoutes.push(
@@ -99,22 +103,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                         style: OutlinedButton.styleFrom(side: BorderSide.none),
                         label: const Text(''),
-                      ),
-                      OutlinedButton.icon(
-                        icon: const Icon(
-                          Icons.login_outlined,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {
-                          SetupRoutes.push(
-                            context,
-                            Routes.LOGIN,
-                          );
-                        },
-                        style: OutlinedButton.styleFrom(side: BorderSide.none),
-                        label: const Text(''),
-                      )
-                    ],
+                      );
+                    }),
+                  )
+                : Container(),
+            !searchActive
+                ? OutlinedButton.icon(
+                    icon: const Icon(
+                      Icons.login_outlined,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      SetupRoutes.push(
+                        context,
+                        Routes.LOGIN,
+                      );
+                    },
+                    style: OutlinedButton.styleFrom(side: BorderSide.none),
+                    label: const Text(''),
                   )
                 : Container()
           ],
