@@ -7,6 +7,7 @@ import 'package:shopping_app/services/size_config.dart';
 import 'package:shopping_app/utils/helpers.dart';
 import 'package:shopping_app/utils/text_styles.dart';
 import 'package:shopping_app/view_model/cart_provider.dart';
+import '../view_model/wish_provider.dart';
 
 class DetailsPage extends StatefulWidget {
   const DetailsPage({
@@ -37,11 +38,23 @@ class _DetailsPageState extends State<DetailsPage> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Icon(
-              Icons.favorite_border,
+        actions: [
+          Consumer<WishProvider>(
+            builder: (context, _provider, child) => IconButton(
+              icon: Icon(
+                _provider.wish.contains(widget.product.id)
+                    ? Icons.favorite
+                    : Icons.favorite_border_outlined,
+                color: _provider.wish.contains(widget.product.id)
+                    ? Colors.red
+                    : null,
+                semanticLabel: _provider.wish.contains(widget.product.id)
+                    ? 'Added to your wishlist'
+                    : 'Removed from your wishlist',
+              ),
+              onPressed: () {
+                _provider.updateWish(widget.product.id);
+              },
             ),
           ),
         ],
