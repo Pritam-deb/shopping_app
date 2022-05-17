@@ -61,6 +61,7 @@ class _CartScreenState extends State<CartScreen> {
                         return CartTile(
                           product: product,
                           updateSubtotal: updateSubtotal,
+                          counter: true,
                         );
                       },
                     ),
@@ -87,7 +88,11 @@ class _CartScreenState extends State<CartScreen> {
                               'Sub Total',
                               style: CustomTextStyles().greyText,
                             ),
-                            PriceText(price: subtotal, fontSize: 20.toFont),
+                            PriceText(
+                              price: subtotal,
+                              fontSize: 20.toFont,
+                              center: false,
+                            ),
                           ]),
                     ),
                     Padding(
@@ -99,7 +104,11 @@ class _CartScreenState extends State<CartScreen> {
                               'Shipping',
                               style: CustomTextStyles().greyText,
                             ),
-                            PriceText(price: shipping, fontSize: 20.toFont),
+                            PriceText(
+                              price: shipping,
+                              fontSize: 20.toFont,
+                              center: false,
+                            ),
                           ]),
                     ),
                     // Add horizontal dotted line
@@ -113,8 +122,10 @@ class _CartScreenState extends State<CartScreen> {
                               style: CustomTextStyles().greyText,
                             ),
                             PriceText(
-                                price: subtotal + shipping,
-                                fontSize: 20.toFont),
+                              price: subtotal + shipping,
+                              fontSize: 20.toFont,
+                              center: false,
+                            ),
                           ]),
                     ),
                     // Convert this button into a widget
@@ -123,10 +134,10 @@ class _CartScreenState extends State<CartScreen> {
                       width: double.infinity,
                       child: OutlinedButton(
                         onPressed: () {
-                          SetupRoutes.push(
-                            context,
-                            Routes.CHECKOUT,
-                          );
+                          SetupRoutes.push(context, Routes.CHECKOUT,
+                              arguments: {
+                                'subTotal': subtotal + shipping,
+                              });
                         },
                         child: const Text("Checkout"),
                         style: OutlinedButton.styleFrom(

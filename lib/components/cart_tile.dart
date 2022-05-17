@@ -9,10 +9,12 @@ class CartTile extends StatelessWidget {
     Key? key,
     required this.product,
     required this.updateSubtotal,
+    required this.counter,
   }) : super(key: key);
 
   final Product product;
   final Function updateSubtotal;
+  final bool counter;
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +54,17 @@ class CartTile extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                PriceText(price: product.price, fontSize: 16.toFont),
-                SizedBox(
-                  width: 100,
-                  child: CounterList(
-                    updateSubtotal: updateSubtotal,
-                    price: product.price,
-                  ),
-                ),
+                PriceText(
+                    price: product.price, fontSize: 16.toFont, center: false),
+                counter
+                    ? SizedBox(
+                        width: 100,
+                        child: CounterList(
+                          updateSubtotal: updateSubtotal,
+                          price: product.price,
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

@@ -24,8 +24,6 @@ class _CounterListState extends State<CounterList> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       widget.updateSubtotal(widget.price);
     });
-    // Future.delayed(Duration.zero, () async {
-    // });
   }
 
   @override

@@ -18,9 +18,21 @@ class CustomTextStyles {
     fontSize: 16.toFont,
   );
 
+  TextStyle h18 = TextStyle(
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontSize: 18.toFont,
+  );
+
   TextStyle greyText = TextStyle(
     color: Colors.grey,
     fontWeight: FontWeight.bold,
     fontSize: 16.toFont,
+  );
+
+  TextStyle greyText14 = TextStyle(
+    color: Colors.grey,
+    fontWeight: FontWeight.bold,
+    fontSize: 14.toFont,
   );
 }

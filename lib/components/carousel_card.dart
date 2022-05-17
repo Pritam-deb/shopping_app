@@ -75,6 +75,7 @@ class CarouselCard extends StatelessWidget {
         PriceText(
           price: product.price,
           fontSize: 18.toFont,
+          center: true,
         )
       ],
     );
