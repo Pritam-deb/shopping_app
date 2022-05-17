@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/components/cart_tile.dart';
@@ -8,7 +6,6 @@ import 'package:shopping_app/model/product.dart';
 import 'package:shopping_app/services/size_config.dart';
 import 'package:shopping_app/utils/text_styles.dart';
 import 'package:shopping_app/view_model/cart_provider.dart';
-import 'package:shopping_app/screens/checkout_screen.dart';
 
 import '../routes/route_names.dart';
 import '../routes/routes.dart';
@@ -25,9 +22,9 @@ class _CartScreenState extends State<CartScreen> {
   double subtotal = 0.0;
   double shipping = 5.0;
 
-  void updateSubtotal(double num) {
+  void updateSubtotal(double price, int itemCount) {
     setState(() {
-      subtotal += num;
+      subtotal = price * itemCount;
     });
   }
 
@@ -46,115 +43,134 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-        child: Consumer<CartProvider>(
-          builder: (context, _provider, child) => _provider.cart.isNotEmpty
-              ? Column(
-                  children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: _provider.cart.length,
-                      itemBuilder: (context, index) {
-                        Product product = Provider.of<ProductProvider>(context)
-                            .getProduct(_provider.cart[index]);
-                        return CartTile(
-                          product: product,
-                          updateSubtotal: updateSubtotal,
-                          counter: true,
-                        );
-                      },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: Consumer<CartProvider>(
+              builder: (context, _provider, child) => _provider.cart.isNotEmpty
+                  ? Column(
                       children: [
-                        Text(
-                          'Promo/Student Code or Vouchers',
-                          style: CustomTextStyles().h2,
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: _provider.cart.length,
+                          itemBuilder: (context, index) {
+                            Product product =
+                                Provider.of<ProductProvider>(context)
+                                    .getProduct(_provider.cart[index].id);
+                            return CartTile(
+                              product: product,
+                              updateSubtotal: updateSubtotal,
+                              counter: true,
+                              quality: _provider.cart[index].quality,
+                              count: _provider.cart[index].count,
+                            );
+                          },
                         ),
-                        const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 15,
-                          color: Colors.grey,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Promo/Student Code or Vouchers',
+                              style: CustomTextStyles().h2,
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 15,
+                              color: Colors.grey,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Sub Total',
-                              style: CustomTextStyles().greyText,
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Sub Total',
+                                  style: CustomTextStyles().greyText,
+                                ),
+                                PriceText(
+                                  price: subtotal,
+                                  fontSize: 20.toFont,
+                                  center: false,
+                                ),
+                              ]),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Shipping',
+                                  style: CustomTextStyles().greyText,
+                                ),
+                                PriceText(
+                                  price: shipping,
+                                  fontSize: 20.toFont,
+                                  center: false,
+                                ),
+                              ]),
+                        ),
+                        // Add horizontal dotted line
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Total',
+                                  style: CustomTextStyles().greyText,
+                                ),
+                                PriceText(
+                                  price: subtotal + shipping,
+                                  fontSize: 20.toFont,
+                                  center: false,
+                                ),
+                              ]),
+                        ),
+                        // Convert this button into a widget
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 30),
+                          width: double.infinity,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              SetupRoutes.push(context, Routes.CHECKOUT,
+                                  arguments: {
+                                    'subTotal': subtotal + shipping,
+                                  });
+                            },
+                            child: const Text("Checkout"),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 20),
+                              primary: Colors.white,
+                              backgroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                             ),
-                            PriceText(
-                              price: subtotal,
-                              fontSize: 20.toFont,
-                              center: false,
-                            ),
-                          ]),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Shipping',
-                              style: CustomTextStyles().greyText,
-                            ),
-                            PriceText(
-                              price: shipping,
-                              fontSize: 20.toFont,
-                              center: false,
-                            ),
-                          ]),
-                    ),
-                    // Add horizontal dotted line
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Total',
-                              style: CustomTextStyles().greyText,
-                            ),
-                            PriceText(
-                              price: subtotal + shipping,
-                              fontSize: 20.toFont,
-                              center: false,
-                            ),
-                          ]),
-                    ),
-                    // Convert this button into a widget
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 30),
-                      width: double.infinity,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          SetupRoutes.push(context, Routes.CHECKOUT,
-                              arguments: {
-                                'subTotal': subtotal + shipping,
-                              });
-                        },
-                        child: const Text("Checkout"),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 30, vertical: 20),
-                          primary: Colors.white,
-                          backgroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
+                      ],
+                    )
+                  : Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/empty_cart.png"),
+                          Text(
+                            "You need to do some shopping :)",
+                            style: CustomTextStyles().h2,
+                          )
+                        ],
                       ),
                     ),
-                  ],
-                )
-              : Container(),
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }

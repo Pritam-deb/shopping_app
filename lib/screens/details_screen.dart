@@ -174,7 +174,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             horizontal: 30, vertical: 20),
                         primary: Colors.white,
                         backgroundColor:
-                            _provider.cart.contains(widget.product.id)
+                            _provider.containsProduct(widget.product.id)
                                 ? Colors.red
                                 : Colors.black,
                         shape: RoundedRectangleBorder(
@@ -182,9 +182,10 @@ class _DetailsPageState extends State<DetailsPage> {
                         ),
                       ),
                       onPressed: () {
-                        _provider.updateCart(widget.product.id);
+                        _provider.updateCart(widget.product.id, selectedTab);
+                        setState(() {}); //Doubt
                       },
-                      child: Text(_provider.cart.contains(widget.product.id)
+                      child: Text(_provider.containsProduct(widget.product.id)
                           ? "Remove from Cart"
                           : "Add to Cart"),
                     ),

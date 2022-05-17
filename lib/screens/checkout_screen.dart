@@ -177,7 +177,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           itemBuilder: (context, index) {
                             Product product =
                                 Provider.of<ProductProvider>(context)
-                                    .getProduct(_provider.cart[index]);
+                                    .getProduct(_provider.cart[index].id);
                             return SizedBox(
                               width: 200,
                               child: Row(

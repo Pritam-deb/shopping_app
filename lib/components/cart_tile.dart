@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping_app/components/counter_list.dart';
 import 'package:shopping_app/components/price_text.dart';
 import 'package:shopping_app/model/product.dart';
 import 'package:shopping_app/services/size_config.dart';
+import 'package:shopping_app/utils/helpers.dart';
+import 'package:shopping_app/utils/text_styles.dart';
+import 'package:shopping_app/view_model/cart_provider.dart';
 
 class CartTile extends StatelessWidget {
   const CartTile({
@@ -10,11 +14,15 @@ class CartTile extends StatelessWidget {
     required this.product,
     required this.updateSubtotal,
     required this.counter,
+    this.quality,
+    required this.count,
   }) : super(key: key);
 
   final Product product;
   final Function updateSubtotal;
   final bool counter;
+  final String? quality;
+  final double count;
 
   @override
   Widget build(BuildContext context) {
@@ -49,20 +57,42 @@ class CartTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  product.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  Helper().getName(product.name),
+                  style: CustomTextStyles().h2,
                 ),
+                quality != null
+                    ? Text(
+                        'Quality : ${quality!}',
+                        style: CustomTextStyles().h2,
+                      )
+                    : const SizedBox(),
                 PriceText(
-                    price: product.price, fontSize: 16.toFont, center: false),
+                  price: product.price,
+                  fontSize: 16.toFont,
+                  center: false,
+                ),
                 counter
-                    ? SizedBox(
-                        width: 100,
-                        child: CounterList(
-                          updateSubtotal: updateSubtotal,
-                          price: product.price,
-                        ),
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            child: CounterList(
+                              updateSubtotal: updateSubtotal,
+                              price: product.price,
+                              id: product.id,
+                              count: count,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Provider.of<CartProvider>(context, listen: false)
+                                  .removeFromCart(product.id);
+                            },
+                            child: const Icon(Icons.cancel),
+                          ),
+                        ],
                       )
                     : const SizedBox(),
               ],
