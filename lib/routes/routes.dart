@@ -5,9 +5,10 @@ import 'package:shopping_app/screens/checkout_screen.dart';
 import 'package:shopping_app/screens/details_screen.dart';
 import 'package:shopping_app/screens/home_screen.dart';
 import 'package:shopping_app/screens/sign_screen.dart';
+import 'package:shopping_app/screens/signup_screen.dart';
 
 class SetupRoutes {
-  static String initialRoute = Routes.HOME;
+  static String initialRoute = Routes.LOGIN;
   static String? currentAtSign;
   static Map<String, WidgetBuilder> get routes {
     return {
@@ -22,6 +23,7 @@ class SetupRoutes {
       },
       Routes.CART: (context) => const CartScreen(),
       Routes.LOGIN: (context) => const SignScreen(),
+      Routes.SIGNUP: (context) => const Signup(),
       Routes.CHECKOUT: (context) {
         Map<String, dynamic> args =
             ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;

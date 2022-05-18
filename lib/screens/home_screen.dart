@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/components/Carousel.dart';
@@ -28,10 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     NetworkRequests().fetchProducts(context, 'All');
-
-    // Firebase.initializeApp(
-    //   options: DefaultFirebaseOptions.currentPlatform,
-    // );
   }
 
   void changeCategory(String selectedTab) {
@@ -113,7 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icons.login_outlined,
                       color: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
                       SetupRoutes.push(
                         context,
                         Routes.LOGIN,
